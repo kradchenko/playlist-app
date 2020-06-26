@@ -68,11 +68,13 @@ class AddSong extends Component {
             songLength: this.state.addSongForm["songLength"].value,
         };
 
-        axios.post('/playlist', song)
+        axios.post('/playlist.json', song)
             .then(response => {
+                console.log(response);
                 this.setState({loading: false,});
             })
             .catch(error => {
+                console.log(error);
                 this.setState({loading: false,});
             });
     };

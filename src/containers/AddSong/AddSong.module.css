@@ -1,0 +1,17 @@
+.Title {
+    display: block;
+    width: 600px;
+    margin: 50px auto 15px;
+    padding-bottom: 15px;
+
+    text-align: center;
+    color: #eee;
+    border-bottom: solid 2px #333333;
+    font-size: 36px;
+    text-transform: uppercase;
+}
+
+.Form {
+    max-width: 1000px;
+    margin: auto;
+}

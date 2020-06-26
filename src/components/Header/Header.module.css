@@ -1,0 +1,28 @@
+.Header {
+    height: 80px;
+    padding: 0 15%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Logo {
+    height: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Name {
+    padding: 0 15px;
+    font-size: 36px;
+    color: #1DB954;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.Name:hover, .Name:focus {
+    color: white;
+}

@@ -1,0 +1,17 @@
+.SongList {
+    max-width: 900px;
+    margin: auto;
+}
+
+.ListHeader {
+    width: 100%;
+    height: 40px;
+    padding: 0 20px;
+
+    cursor: default;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #cccccc;
+    border-bottom: #333 solid 2px;
+}

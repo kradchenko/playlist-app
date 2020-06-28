@@ -5,11 +5,9 @@
     outline: none;
     cursor: pointer;
 
-    padding: 10px;
     margin: 10px;
 
     text-transform: uppercase;
-    font-size: 12px;
     font-weight: 500;
 
     transition: all 0.3s ease-in-out;
@@ -31,7 +29,22 @@
     background-color: #F32013;;
 }
 
+.Neutral {
+    background-color: rgba(64, 164, 200, 0.8);
+}
+
+.Neutral:hover, .Neutral:focus {
+    background-color: rgb(64, 164, 200);
+}
+
 .Button:disabled {
     cursor: not-allowed;
-    color: #ccc;
+    background-color: #ccc;
+    color: #333333;
+}
+
+@media (max-width: 400px) {
+    .Button {
+        margin: 2px;
+    }
 }

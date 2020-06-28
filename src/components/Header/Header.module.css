@@ -21,8 +21,19 @@
     text-align: center;
     transition: all 0.3s ease;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .Name:hover, .Name:focus {
     color: white;
+}
+
+@media (max-width: 1300px) {
+    .Header {
+        padding: 0 5%;
+    }
+
+    .Name {
+        font-size: 28px;
+    }
 }

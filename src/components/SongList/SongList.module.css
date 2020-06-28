@@ -1,6 +1,6 @@
 .SongList {
     max-width: 900px;
-    margin: auto;
+    margin: 5rem auto auto;
 }
 
 .ListHeader {
@@ -14,4 +14,10 @@
     text-transform: uppercase;
     color: #cccccc;
     border-bottom: #333 solid 2px;
+}
+
+@media (max-width: 900px) {
+    .SongList {
+        margin: 5rem 15px auto;
+    }
 }

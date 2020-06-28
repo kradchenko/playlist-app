@@ -1,0 +1,10 @@
+.RemoveConfirmation {
+    color: #eeeeee;
+    text-align: center;
+}
+
+.Buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}

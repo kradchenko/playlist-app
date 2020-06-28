@@ -4,31 +4,19 @@ import axios from '../../axios-orders';
 import Input from '../../components/UI/Input/Input';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Button from '../../components/UI/Button/Button';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 import classes from '../AddSong/AddSong.module.css';
 
 class AddSong extends Component {
     state = {
         addSongForm: {
-            name: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'e.g. Drake',
-                },
-                value: '',
-                validation: {
-                    required: true,
-                },
-                valid: false,
-                touched: false,
-                errorMessage: 'Please enter name of song.',
-            },
             author: {
+                label: 'Author',
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'e.g. Toosie Slide',
+                    placeholder: 'Drake',
                 },
                 value: '',
                 validation: {
@@ -38,11 +26,27 @@ class AddSong extends Component {
                 touched: false,
                 errorMessage: 'Please enter author of song.',
             },
-            songLength: {
+            name: {
+                label: 'Name of Song',
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'e.g. 3:45',
+                    placeholder: 'Toosie Slide',
+                },
+                value: '',
+                validation: {
+                    required: true,
+                },
+                valid: false,
+                touched: false,
+                errorMessage: 'Please enter name of song.',
+            },
+            songLength: {
+                label: 'Song Length',
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: '3:45',
                 },
                 value: '',
                 validation: {
@@ -68,14 +72,28 @@ class AddSong extends Component {
             songLength: this.state.addSongForm["songLength"].value,
         };
 
+        const updatedForm = {
+            ...this.state.addSongForm,
+            "author": {
+                ...this.state.addSongForm["author"],
+                value: '',
+            },
+            "name": {
+                ...this.state.addSongForm["name"],
+                value: '',
+            },
+            "songLength": {
+                ...this.state.addSongForm["songLength"],
+                value: '',
+            }
+        };
+
         axios.post('/playlist.json', song)
             .then(response => {
-                console.log(response);
-                this.setState({loading: false,});
+                this.setState({loading: false, addSongForm: updatedForm});
             })
             .catch(error => {
-                console.log(error);
-                this.setState({loading: false,});
+                this.setState({loading: false});
             });
     };
 
@@ -115,6 +133,10 @@ class AddSong extends Component {
         return isValid;
     };
 
+    goToPlaylist = () => {
+        this.props.history.push('/');
+    };
+
     render() {
         const formElementsArray = [];
         for(let key in this.state.addSongForm) {
@@ -127,11 +149,16 @@ class AddSong extends Component {
 
         let form = (
             <Aux>
-                <h2 className={classes.Title}>Add Song To Playlist</h2>
-                <form className={classes.Form} onSubmit={(event) => this.addSongHandler(event)}>
+                <div className={classes.Title}>
+                    <h2>Add Song To Playlist</h2>
+                </div>
+                <form className={classes.Form}
+                      onKeyPress={(event) => { if (event.key === 'Enter') event.preventDefault()}}
+                      onSubmit={(event) => this.addSongHandler(event)}>
                     {formElementsArray.map(formElement => (
                         <Input
                             key={formElement.id}
+                            label={formElement.config.label}
                             elementType={formElement.config.elementType}
                             elementConfig={formElement.config.elementConfig}
                             value={formElement.config.value}
@@ -142,13 +169,16 @@ class AddSong extends Component {
                             changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         />
                     ))}
-                    <Button btnType="Success">Submit</Button>
+                    <div className={classes.Button}>
+                        <Button btnType="Neutral" fontSize="16px" padding="10px 15px" clicked={this.goToPlaylist}>Back To Playlist</Button>
+                        <Button btnType="Success" fontSize="16px" padding="10px 15px" disabled={!this.state.formIsValid}>Submit</Button>
+                    </div>
                 </form>
             </Aux>
         );
 
         if (this.state.loading) {
-            form = (<p>Loading...</p>)
+            form = (<Spinner/>);
         }
 
         return form ;

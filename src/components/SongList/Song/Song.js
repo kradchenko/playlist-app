@@ -8,8 +8,10 @@ const song = (props) => (
     <div className={classes.Song}>
         <p>{props.name}</p>
         <div>
-            <Button btnType="Danger" clicked={props.removed}>Remove</Button>
-            <Button btnType="Success" clicked={props.clicked}>See Details</Button>
+            <Button btnType="Danger" fontSize="12px" padding="10px 15px" media
+                    clicked={props.removed}>Remove</Button>
+            <Button btnType="Success" fontSize="12px" padding="10px 15px" media
+                clicked={props.clicked}>See Details</Button>
         </div>
     </div>
 );

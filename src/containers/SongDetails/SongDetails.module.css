@@ -1,0 +1,26 @@
+.SongDetails {
+    max-width: 500px;
+    margin: 10rem auto auto;
+    padding: 5px 15px;
+    box-sizing: border-box;
+
+    background-color: #222;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 1);
+
+    transition: all ease-in-out 0.5s;
+}
+
+.SongDetails .button {
+    display: flex;
+    justify-content: center;
+}
+
+.SongDetails:hover {
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);
+}
+
+@media (max-width: 450px) {
+    .SongDetails {
+        margin: 5rem 15px auto 15px;
+    }
+}

@@ -1,17 +1,35 @@
 .Title {
     display: block;
-    width: 600px;
+    max-width: 600px;
     margin: 50px auto 15px;
     padding-bottom: 15px;
 
     text-align: center;
-    color: #eee;
+    color: #cccccc;
     border-bottom: solid 2px #333333;
-    font-size: 36px;
+    font-size: 25px;
     text-transform: uppercase;
 }
 
 .Form {
     max-width: 500px;
     margin: auto;
+}
+
+.Button {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+@media (max-width: 500px) {
+    .Title {
+        font-size: 15px;
+        margin: 15px 10px auto 15px;
+    }
+
+    .Form {
+        margin-top: 20px;
+    }
 }

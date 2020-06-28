@@ -20,7 +20,7 @@ const input = (props) => {
                                   onChange={props.changed}/>;
             break;
         }
-        // TODO: Add more options if needed.
+        //TODO: Add more options if needed.
         default: {
             inputElement = <input className={InputClasses.join(' ')}
                                   {...props.elementConfig}
@@ -37,6 +37,6 @@ const input = (props) => {
             {validationError}
         </div>
     )
-}
+};
 
 export default input;

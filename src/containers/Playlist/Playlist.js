@@ -1,51 +1,101 @@
 import React, { Component } from 'react';
 import axios from '../../axios-orders';
 
+import Aux from '../../hoc/Auxiliary/Auxiliary';
 import SongList from '../../components/SongList/SongList';
-
-import classes from './Playlist.module.css';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import Modal from '../../components/UI/Modal/Modal';
+import RemoveConfirmation from '../../components/RemoveConfirmation/RemoveConfirmation';
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 class Playlist extends Component {
     state = {
-        songList: [],
+        songList: null,
+        loading: false,
+        confirmation: false,
+        songId: '',
+    };
+
+    componentDidMount() {
+        this.fetchPlaylist();
+    }
+
+    fetchPlaylist = () => {
+        this.setState({loading: true});
+
+        axios.get('playlist.json')
+            .then(response => {
+                this.setState({songList: response.data, loading: false});
+            })
+            .catch(error => {});
     };
 
     showSongDetailHandler = (songId) => {
+        const song = { ...this.state.songList[songId]};
+
         this.props.history.push({
                 pathname: '/song-details/' + songId,
+                song: song,
             },
-            songId,
         );
     };
 
-    // Method in case song were stored in state.
-    // removeSongHandler = (index) => {
-    //     const updatedSongList = [
-    //         ...this.state.songList,
-    //     ];
-    //     updatedSongList.splice(index, 1);
-    //
-    //     this.setState({songList: updatedSongList});
-    // };
-
-    removeSongHandler = (songId) => {
-        axios.delete('playlist?id=' + songId)
+    removeSongHandler = () => {
+        axios.delete('playlist/' + this.state.songId + '.json')
             .then(response => {
-                console.log('[Remove Song] : ', response.data);
+                this.cancelRemoveSongConfirmation();
+                this.fetchPlaylist();
             })
             .catch(error => {
-                console.log('[Remove Song Error] : ', error.response.data)
+                console.log('[Remove Song Error] : ', error.response.data);
             });
     };
 
+    openRemoveSongConfirmation = (songId) => {
+        this.setState({confirmation: true, songId: songId});
+    };
+
+    cancelRemoveSongConfirmation = () => {
+        this.setState({confirmation: false, songId: ''});
+    };
+
+
     render() {
+        let removeConfirmation = null;
+        let songListArray = [];
+        for(let key in this.state.songList) {
+            songListArray.push({
+                    id: key,
+                    details: this.state.songList[key],
+                }
+            );
+        }
+
+        let songList = <SongList songList={songListArray}
+                                 showSongDetail={this.showSongDetailHandler}
+                                 removeSong={this.openRemoveSongConfirmation}/>;
+
+        removeConfirmation = <RemoveConfirmation
+                songId={this.state.songId}
+                songList={this.state.songList}
+                cancelRemoving={this.cancelRemoveSongConfirmation}
+                removeSong={this.removeSongHandler}/>;
+
+        if (this.state.loading) {
+            songList = <Spinner/>;
+        }
+
         return (
-            <div className={classes.marginTop}>
-                <SongList songList={this.state.songList} showSongDetail={this.showSongDetailHandler} removeSong={this.removeSongHandler}/>
-            </div>
+            <Aux>
+                <Modal show={this.state.confirmation}
+                       modalClosed={this.cancelRemoveSongConfirmation} >
+                    {removeConfirmation}
+                </Modal>
+                {songList}
+            </Aux>
         );
     }
 }
 
-export default Playlist;
+export default withErrorHandler(Playlist, axios);
 
